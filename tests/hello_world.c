@@ -1,6 +1,6 @@
 #include <msp430.h> // Port definitions, etc.
 
-// Main routine
+// Main routine. Turns on LED1 (P1.0)
 int main(void) {
     WDTCTL = WDTPW + WDTHOLD; // Stop Watchdog Timer
     P1SEL &= ~BIT0;           // Pin 1.0 as I/O
