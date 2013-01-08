@@ -189,7 +189,7 @@ Here's the script in case you don't want to clone the repo. Just copy the follow
 ```bash
     #/usr/bin/env bash
 
-    # A simple (and not very nice)
+    # A simple (and sometimes buggy) error checking tool
     check_for_errors(){
         echo "$1" | tail 
         if [ -n "$1" ]

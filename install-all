@@ -1,5 +1,6 @@
 #/usr/bin/env bash
 
+# A simple (and sometimes buggy) error checking tool
 check_for_errors(){
     echo "$1" | tail 
     if [ -n "$1" ]
