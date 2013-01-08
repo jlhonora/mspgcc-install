@@ -2,18 +2,16 @@ mspgcc-install
 ==============
 
 Script to install [mspgcc](http://mspgcc.sourceforge.net/) (C compiler for [msp430](http://www.ti.com/msp430) microcontrollers) in Ubuntu. It installs the LTS (Long Term Support) version of the compiler, 
-which is the most up-to-date version. Currently, this is LTS 20120406.
+which is the most up-to-date version. Currently, this is LTS 20120406. The installation folder is /usr/local/msp430 (modifiable in the script). If you already have contents in this folder I recommend you to move it to a backup folder, i.e.:
+    
+    $ sudo mv /usr/local/msp430 /usr/local/msp430-backup
 
-To install got to the Terminal app (console) and run:
+To install go to the console and run:
 
     $ git clone https://github.com/jlhonora/mspgcc-install.git
     $ cd mspgcc-install
     $ chmod +x install-all
     $ ./install-all
-
-That will download, patch and install the current stable version into /usr/local/msp430 (modifiable in the script). If you already have contents in this folder I recommend you to move it to a backup folder, i.e.:
-
-    $ sudo mv /usr/local/msp430 /usr/local/msp430-backup
 
 You should be careful to watch for error messages. 
 
