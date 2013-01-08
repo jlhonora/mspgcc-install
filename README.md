@@ -4,7 +4,8 @@ mspgcc-install
 Script to install [mspgcc](http://mspgcc.sourceforge.net/) (C compiler for [msp430](http://www.ti.com/msp430) microcontrollers) in Ubuntu. It installs the LTS (Long Term Support) version of the compiler, 
 which is the most up-to-date version. Currently, this is LTS 20120406.
 
-To install got to the terminal app and run:
+To install got to the Terminal app (console) and run:
+
     $ git clone https://github.com/jlhonora/mspgcc-install.git
     $ cd mspgcc-install
     $ chmod +x install-all
@@ -16,9 +17,10 @@ That should download, patch and install the current stable version into /usr/loc
 
 You should be careful to watch for error messages. In the following sections you will find how to build each part of the project in order.
     
-This guide is based on [Sergio Campama's](https://github.com/sergiocampama/Launchpad) guide.
+This guide is loosely based on [Sergio Campama's](https://github.com/sergiocampama/Launchpad) guide and the README files of mspgcc.
 
 ## mspgcc basics ##
+```bash
     # Installation path. This will overwrite your
     # changes to the INSTALL_PATH folder
     INSTALL_PATH=/usr/local/msp430
@@ -27,8 +29,10 @@ This guide is based on [Sergio Campama's](https://github.com/sergiocampama/Launc
     wget http://sourceforge.net/projects/mspgcc/files/mspgcc/mspgcc-20120406.tar.bz2
     tar xvf mspgcc-20120406.tar.bz2
     cd mspgcc-20120406
+```
 
 ## binutils ##
+```bash
     echo "Downloading binutils" 
     wget ftp://ftp.gnu.org/pub/gnu/binutils/binutils-2.21.1a.tar.bz2
     echo "Extracting binutils" 
@@ -45,8 +49,10 @@ This guide is based on [Sergio Campama's](https://github.com/sergiocampama/Launc
     sudo make install 2>&1 | tee moi
     echo "Done with binutils" 
     cd ../../
+```
     
 ## gcc ##
+```bash
     echo "Downloading gcc" 
     wget ftp://ftp.gnu.org/pub/gnu/gcc/gcc-4.6.3/gcc-4.6.3.tar.bz2
     wget http://sourceforge.net/projects/mspgcc/files/Patches/LTS/20120406/msp430-gcc-4.6.3-20120406-sf3540953.patch
@@ -69,8 +75,13 @@ This guide is based on [Sergio Campama's](https://github.com/sergiocampama/Launc
     make 2>&1 | tee mo
     sudo make install 2>&1 | tee moi
     echo "Done with gcc" 
+```
     
 ## gdb ##
+
+    GDB for msp430. Also check the installation of mspdebug (TODO).
+
+```bash
     echo "Downloading gdb" 
     wget ftp://ftp.gnu.org/pub/gnu/gdb/gdb-7.2a.tar.bz2
     echo "Extracting gdb" 
@@ -86,10 +97,14 @@ This guide is based on [Sergio Campama's](https://github.com/sergiocampama/Launc
     make 2>&1 | tee mo
     sudo make install 2>&1 | tee moi
     echo "Done with gdb" 
-    errors=`cat co mo moi | grep "Error [0-9]"`
-    check_for_errors "$errors"
     cd ../../
+```
+
 ## msp430mcu ##
+
+Installs the header files and others related to every TI mcu.
+
+```bash
     echo "Downloading msp430mcu" 
     wget http://sourceforge.net/projects/mspgcc/files/msp430mcu/msp430mcu-20120406.tar.bz2
     wget http://sourceforge.net/projects/mspgcc/files/Patches/LTS/20120406/msp430mcu-20120406-sf3522088.patch
@@ -100,7 +115,10 @@ This guide is based on [Sergio Campama's](https://github.com/sergiocampama/Launc
     echo "Installing msp430mcu" 
     sudo MSP430MCU_ROOT=`pwd` ./scripts/install.sh $INSTALL_PATH | tee so
     cd ..
+```
 ## msp430-libc ##
+Minimal libc for msp430.
+```bash
     OLDPATH=$PATH
     export PATH=$INSTALL_PATH/bin:$PATH
     echo "Downloading libc" 
@@ -116,16 +134,15 @@ This guide is based on [Sergio Campama's](https://github.com/sergiocampama/Launc
     make | tee mo
     sudo make PREFIX=$INSTALL_PATH install | tee mio
     echo "Done with libc" 
-    errors=`cat mo mio | grep "Error [0-9]"`
-    check_for_errors "$errors"
     cd ..
     PATH=$OLDPATH
+```
 
 
 ## Install script ##
 Here's the script in case you don't want to clone the repo. Just copy the following text to a script file and run it.
 
-
+```bash
     #/usr/bin/env bash
 
     # A simple (and not very nice)
@@ -251,3 +268,4 @@ Here's the script in case you don't want to clone the repo. Just copy the follow
 
     PATH=$OLDPATH
     echo "Done installing, installed at $INSTALL_PATH"
+```
