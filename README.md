@@ -6,7 +6,7 @@ which is the most up-to-date version. Currently, this is LTS 20120406.
 
 To build mspgcc you will need to install _at least_ the following packages:
 
-    $ sudo apt-get install patch ncurses-dev build-essential bison flex texinfo
+    $ sudo apt-get install patch ncurses-dev build-essential bison flex texinfo libgmp10 libmpc2 libmpfr4 zlib1g
 
 The installation folder is `/usr/local/msp430` (modifiable in the script). If you already have contents in this folder I recommend you to move it to a backup folder, i.e.:
     
