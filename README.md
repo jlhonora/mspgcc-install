@@ -1,7 +1,7 @@
-mspgcc-install
-==============
+Install mspgcc in Ubuntu
+========================
 
-Script to install [mspgcc uniarch](http://mspgcc.sourceforge.net/) (C compiler for [msp430](http://www.ti.com/msp430) microcontrollers) in Ubuntu. It installs the LTS (Long Term Support) version of the compiler, 
+This repo has a script to install and some utilities to use  [mspgcc uniarch](http://mspgcc.sourceforge.net/) (C compiler for [msp430](http://www.ti.com/msp430) microcontrollers) in Ubuntu. It installs the LTS (Long Term Support) version of the compiler, 
 which is the most up-to-date version. Currently, this is LTS 20120406. 
 
 To build mspgcc you will need to install _at least_ the following packages:
