@@ -44,6 +44,11 @@ The previous command should generate a compiled file named `a.out`, ready to ins
     $ make WITHOUTH_READLINE=1
     $ sudo make install
 
+USB permissions should be added to the FET interface of the Launchpad ([source](https://github.com/sergiocampama/Launchpad#mspdebug-usb-permissions)). As root, creat the file `/etc/udev/rules.d/71-persistent-msp430.rules` and add `AATR{idVendor}=="0451", ATTRS{idProduct}=="f432", MODE="0660", GROUP="plugdev"` . Then run
+
+    sudo addgroup YOUR_USERNAME plugdev
+    sudo restart udev
+
 If everything goes well, you can install the compiled program:
 
     $ sudo mspdebug rf2500 "prog a.out"
@@ -122,7 +127,7 @@ The compiler itself.
     
 ## gdb ##
 
-GDB for msp430. Also check the installation of mspdebug (TODO).
+GDB for msp430.
 
 ```bash
     echo "Downloading gdb" 
