@@ -1,8 +1,14 @@
 mspgcc-install
 ==============
 
-Script to install [mspgcc](http://mspgcc.sourceforge.net/) (C compiler for [msp430](http://www.ti.com/msp430) microcontrollers) in Ubuntu. It installs the LTS (Long Term Support) version of the compiler, 
-which is the most up-to-date version. Currently, this is LTS 20120406. The installation folder is /usr/local/msp430 (modifiable in the script). If you already have contents in this folder I recommend you to move it to a backup folder, i.e.:
+Script to install [mspgcc uniarch](http://mspgcc.sourceforge.net/) (C compiler for [msp430](http://www.ti.com/msp430) microcontrollers) in Ubuntu. It installs the LTS (Long Term Support) version of the compiler, 
+which is the most up-to-date version. Currently, this is LTS 20120406. 
+
+To build mspgcc you will need to install _at least_ the following packages:
+
+    $ sudo apt-get install patch ncurses-dev build-essential bison flex texinfo
+
+The installation folder is `/usr/local/msp430` (modifiable in the script). If you already have contents in this folder I recommend you to move it to a backup folder, i.e.:
     
     $ sudo mv /usr/local/msp430 /usr/local/msp430-backup
 
@@ -15,7 +21,7 @@ To install go to the console and run:
 
 You should be careful to watch for error messages. 
 
-If everything goes well, I recommend you to add the msp430-gcc path to your environment path. For that, append the following line to your .bashrc:
+If everything goes well, I recommend you to add the msp430-gcc path to your environment path. For that, append the following line to your `.bashrc`:
 
     PATH=$PATH:/usr/local/msp430/bin
 
@@ -30,7 +36,7 @@ The mmcu option should match the microcontroller you will be using.
 
 ## Installing the file in a Launchpad board ##
 
-The previous command should generate a compiled file named a.out, ready to install in the microcontroller. If you have a [MSP430 Launchpad Board](http://www.ti.com/ww/en/launchpad/msp430_head.html) at reach you can install the compiled file with [mspdebug](http://mspdebug.sourceforge.net/). It can be installed with 
+The previous command should generate a compiled file named `a.out`, ready to install in the microcontroller. If you have a [MSP430 Launchpad Board](http://www.ti.com/ww/en/launchpad/msp430_head.html) at reach you can install the compiled file with [mspdebug](http://mspdebug.sourceforge.net/). It can be installed with 
 
     $ sudo apt-get install libusb-dev
     $ wget http://sourceforge.net/projects/mspdebug/files/mspdebug-0.21.tar.gz
@@ -42,11 +48,13 @@ If everything goes well, you can install the compiled program:
 
     $ sudo mspdebug rf2500 "prog a.out"
 
-This should also work with the [MSP-EXP430F5529 board](http://www.ti.com/tool/msp-exp430f5529), but changing the compile options to -mmcu=msp430f5529.
+This should also work with the [MSP-EXP430F5529 board](http://www.ti.com/tool/msp-exp430f5529), but changing the compile options to `-mmcu=msp430f5529`.
 
 ## Credits ##
     
 This guide is loosely based on [Sergio Campama's](https://github.com/sergiocampama/Launchpad) guide and the README files of mspgcc.
+
+----
 
 ## Building every part separately ##
 
@@ -173,6 +181,7 @@ Minimal libc for msp430.
     PATH=$OLDPATH
 ```
 
+----
 
 ## Install script ##
 Here's the script in case you don't want to clone the repo. Just copy the following text to a script file and run it.
