@@ -11,11 +11,11 @@ To install got to the Terminal app (console) and run:
     $ chmod +x install-all
     $ ./install-all
 
-That should download, patch and install the current stable version into /usr/local/msp430 (modifyiable in the script). If you already have contents in this folder I recommend you to move it to a backup folder, i.e.:
+That will download, patch and install the current stable version into /usr/local/msp430 (modifiable in the script). If you already have contents in this folder I recommend you to move it to a backup folder, i.e.:
 
     $ sudo mv /usr/local/msp430 /usr/local/msp430-backup
 
-You should be careful to watch for error messages. In the following sections you will find how to build each part of the project in order.
+You should be careful to watch for error messages. 
 
 If everything goes well, I recommend you to add the msp430-gcc path to your environment path. For that, append the following line to your .bashrc:
 
@@ -30,7 +30,7 @@ To check that everything is ok, type:
 
 The mmcu option should match the microcontroller you will be using.
 
-## Installing the file in a Launchpad board ""
+## Installing the file in a Launchpad board ##
 
 The previous command should generate a compiled file named a.out, ready to install in the microcontroller. If you have a [MSP430 Launchpad Board](http://www.ti.com/ww/en/launchpad/msp430_head.html) at reach you can install the compiled file with [mspdebug](http://mspdebug.sourceforge.net/). It can be installed with 
 
@@ -49,6 +49,10 @@ This should also work with the [MSP-EXP430F5529 board](http://www.ti.com/tool/ms
 ## Credits ##
     
 This guide is loosely based on [Sergio Campama's](https://github.com/sergiocampama/Launchpad) guide and the README files of mspgcc.
+
+## Building every part separately ##
+
+In the following sections you will find how to build each part of the project in order.
 
 ## mspgcc basics ##
 ```bash
