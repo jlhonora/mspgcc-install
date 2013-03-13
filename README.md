@@ -38,10 +38,10 @@ The mmcu option should match the microcontroller you will be using.
 
 The previous command should generate a compiled file named `a.out`, ready to install in the microcontroller. If you have a [MSP430 Launchpad Board](http://www.ti.com/ww/en/launchpad/msp430_head.html) at reach you can install the compiled file with [mspdebug](http://mspdebug.sourceforge.net/). It can be installed with 
 
-    $ sudo apt-get install libusb-dev
+    $ sudo apt-get install libusb-dev libreadline6-dev
     $ wget http://sourceforge.net/projects/mspdebug/files/mspdebug-0.21.tar.gz
     $ cd mspdebug-0.21
-    $ make WITHOUTH_READLINE=1
+    $ make
     $ sudo make install
 
 USB permissions should be added to the FET interface of the Launchpad ([source](https://github.com/sergiocampama/Launchpad#mspdebug-usb-permissions)). As root, creat the file `/etc/udev/rules.d/71-persistent-msp430.rules` and add `AATR{idVendor}=="0451", ATTRS{idProduct}=="f432", MODE="0660", GROUP="plugdev"` . Then run
