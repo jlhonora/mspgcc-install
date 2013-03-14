@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Installs mspdebug
+# Run as sudo
+# JLH 2013
+apt-get -y install libusb-dev libreadline6-dev
+wget http://sourceforge.net/projects/mspdebug/files/mspdebug-0.21.tar.gz
+tar -xvf mspdebug-0.21.tar.gz
+cd mspdebug-0.21
+make
+make install
