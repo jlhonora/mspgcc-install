@@ -2,7 +2,7 @@ Install mspgcc in Ubuntu
 ========================
 
 This repo has a script to install and some utilities to use  [mspgcc uniarch](http://mspgcc.sourceforge.net/) (C compiler for [msp430](http://www.ti.com/msp430) microcontrollers) in Ubuntu. It installs the LTS (Long Term Support) version of the compiler, 
-which is the most up-to-date version. Currently, this is LTS 20120406. 
+which is the most up-to-date version. Currently, this is LTS 20120406. __Update__: The branch '20120911' contains a script to install the 20-bit development compiler, based on gcc 4.7.
 
 To build mspgcc you will need to install _at least_ the following packages:
 
@@ -55,6 +55,13 @@ If everything goes well, you can install the compiled program:
     $ sudo mspdebug rf2500 "prog a.out"
 
 This should also work with the [MSP-EXP430F5529 board](http://www.ti.com/tool/msp-exp430f5529), but changing the compile options to `-mmcu=msp430f5529`.
+
+## 20-bit support ##
+To install the development version of the compiler, do:
+
+    $ git checkout 20120911
+
+And then follow the instructions above.
 
 ## Credits ##
     
