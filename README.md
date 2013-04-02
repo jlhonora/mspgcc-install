@@ -6,18 +6,18 @@ which is the most up-to-date version. Currently, this is LTS 20120406. __Update_
 
 To build mspgcc you will need to install _at least_ the following packages:
 
-    $ sudo apt-get install patch ncurses-dev build-essential bison flex libgmp3-dev libmpfr-dev libmpc-dev texinfo zlib1g-dev
+    sudo apt-get install patch ncurses-dev build-essential bison flex libgmp3-dev libmpfr-dev libmpc-dev texinfo zlib1g-dev
 
 The installation folder is `/usr/local/msp430` (modifiable in the script). If you already have contents in this folder I recommend you to move it to a backup folder, i.e.:
     
-    $ sudo mv /usr/local/msp430 /usr/local/msp430-backup
+    sudo mv /usr/local/msp430 /usr/local/msp430-backup
 
 To install go to the console and run:
 
-    $ git clone https://github.com/jlhonora/mspgcc-install.git
-    $ cd mspgcc-install
-    $ chmod +x install-all
-    $ ./install-all
+    git clone https://github.com/jlhonora/mspgcc-install.git
+    cd mspgcc-install
+    chmod +x install-all
+    ./install-all
 
 You should be careful to watch for error messages. 
 
@@ -29,21 +29,21 @@ If everything goes well, I recommend you to add the msp430-gcc path to your envi
 
 To check that everything is ok, type:
 
-    $ cd tests
-    $ msp430-gcc -mmcu=msp430g2553 hello_world.c 
+    cd tests
+    msp430-gcc -mmcu=msp430g2553 hello_world.c 
 
 The mmcu option should match the microcontroller you will be using.
 
 ## Installing the file in a Launchpad board ##
 
-The previous command should generate a compiled file named `a.out`, ready to install in the microcontroller. If you have a [MSP430 Launchpad Board](http://www.ti.com/ww/en/launchpad/msp430_head.html) at reach you can install the compiled file with [mspdebug](http://mspdebug.sourceforge.net/). It can be installed with 
+The previous command should generate a compiled file named `a.out`, ready to install in the microcontroller. If you have a [MSP430 Launchpad Board](http://www.ti.com/ww/en/launchpad/msp430_head.html) at reach you can install the compiled file with [mspdebug](http://mspdebug.sourceforge.net/). It can be installed with the `install-mspdebug` script or by running the following command:
 
-    $ sudo apt-get install libusb-dev libreadline6-dev
-    $ wget http://sourceforge.net/projects/mspdebug/files/mspdebug-0.21.tar.gz
-    $ tar -xvf mspdebug-0.21.tar.gz
-    $ cd mspdebug-0.21
-    $ make
-    $ sudo make install
+    sudo apt-get install libusb-dev libreadline6-dev
+    wget http://sourceforge.net/projects/mspdebug/files/mspdebug-0.21.tar.gz
+    tar -xvf mspdebug-0.21.tar.gz
+    cd mspdebug-0.21
+    make
+    sudo make install
 
 USB permissions should be added to the FET interface of the Launchpad ([source](https://github.com/sergiocampama/Launchpad#mspdebug-usb-permissions)). As root, creat the file `/etc/udev/rules.d/71-persistent-msp430.rules` and add `AATR{idVendor}=="0451", ATTRS{idProduct}=="f432", MODE="0660", GROUP="plugdev"` . Then run
 
@@ -52,14 +52,14 @@ USB permissions should be added to the FET interface of the Launchpad ([source](
 
 If everything goes well, you can install the compiled program:
 
-    $ sudo mspdebug rf2500 "prog a.out"
+    sudo mspdebug rf2500 "prog a.out"
 
 This should also work with the [MSP-EXP430F5529 board](http://www.ti.com/tool/msp-exp430f5529), but changing the compile options to `-mmcu=msp430f5529`.
 
 ## 20-bit support ##
 To install the development version of the compiler, do:
 
-    $ git checkout 20120911
+    git checkout 20120911
 
 And then follow the instructions above.
 
