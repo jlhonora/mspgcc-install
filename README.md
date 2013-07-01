@@ -23,7 +23,9 @@ You should be careful to watch for error messages.
 
 If everything goes well, I recommend you to add the msp430-gcc path to your environment path. For that, append the following line to your `.bashrc`:
 
-    PATH=$PATH:/usr/local/msp430/bin
+    export PATH=/usr/local/msp430/bin:/usr/local/msp430/lib:/usr/local/msp430/include:$PATH
+
+Also paste it in the command line to use the modified $PATH right away.
 
 ## Testing ##
 
