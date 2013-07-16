@@ -16,7 +16,6 @@ To install go to the console and run:
 
     git clone https://github.com/jlhonora/mspgcc-install.git
     cd mspgcc-install
-    chmod +x install-all
     ./install-all
 
 You should be careful to watch for error messages. 
