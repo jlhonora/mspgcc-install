@@ -37,7 +37,7 @@ The mmcu option should match the microcontroller you will be using.
 
 ## Installing the file in a Launchpad board ##
 
-The previous command should generate a compiled file named `a.out`, ready to install in the microcontroller. If you have a [MSP430 Launchpad Board](http://www.ti.com/ww/en/launchpad/msp430_head.html) at reach you can install the compiled file with [mspdebug](http://mspdebug.sourceforge.net/). It can be installed with the `install-mspdebug` script or by running the following commands:
+The previous command should generate a compiled file named `a.out`, ready to install in the microcontroller. If you have a [MSP430 Launchpad Board](http://www.ti.com/ww/en/launchpad/msp430_head.html) at reach you can install the compiled file with [mspdebug](http://mspdebug.sourceforge.net/). It can be installed with the `install-mspdebug` script (`$ ./install-mspdebug`) or by running the following commands:
 
     sudo apt-get install libusb-dev libreadline6-dev
     wget http://sourceforge.net/projects/mspdebug/files/mspdebug-0.21.tar.gz
@@ -46,7 +46,7 @@ The previous command should generate a compiled file named `a.out`, ready to ins
     make
     sudo make install
 
-Update: If you're using Ubuntu 13.04 I strongly recommend installing mspdebug via the `install-mspdebug` script, since there's a modification it should be made to the source for it to compile successfully.
+Update: If you're using Ubuntu 13.04 I strongly recommend installing mspdebug via the `install-mspdebug` script, since there's a modification that should be made to the source for it to compile successfully.
 
 USB permissions should be added to the FET interface of the Launchpad ([source](https://github.com/sergiocampama/Launchpad#mspdebug-usb-permissions)). As root, create the file `/etc/udev/rules.d/71-persistent-msp430.rules` and add `AATR{idVendor}=="0451", ATTRS{idProduct}=="f432", MODE="0660", GROUP="plugdev"` . Then run
 
