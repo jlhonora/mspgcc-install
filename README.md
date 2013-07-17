@@ -72,7 +72,7 @@ This guide is loosely based on [Sergio Campama's](https://github.com/sergiocampa
 
 ## Building every part separately ##
 
-In the following sections you will find how to build each part of the project in order.
+In the following sections you will find how to build each part of the project in order. __NOTE: These are not the latest instructions on how to build mspgcc, please refer to the `install-all` script for the most up-to-date way of building it.__
 
 ## mspgcc basics ##
 ```bash
