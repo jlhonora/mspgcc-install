@@ -1,10 +1,36 @@
 #!/usr/bin/env bash
 # Installs mspdebug
-# Run as sudo
 # JLH 2013
+
+# Checks if a given file exists.
+# if it does not, then it downloads it
+# from the web. Must be given the filename
+# as first argument and the url as the second
+# argument.
+check_or_download() {
+    if [ ! -f $1 ]
+    then
+        echo "$1 does not exists, downloading."
+        wget "$2"
+    else
+        echo -n "$1 exists, will not re-download. Consider "
+        echo "removing it if you want a clean install"
+    fi
+}
+
 apt-get -y install libusb-dev libreadline6-dev
-wget http://sourceforge.net/projects/mspdebug/files/mspdebug-0.21.tar.gz
+check_or_download mspdebug-0.21.tar.gz \
+                  http://sourceforge.net/projects/mspdebug/files/mspdebug-0.21.tar.gz
 tar -xvf mspdebug-0.21.tar.gz
 cd mspdebug-0.21
+
+# So far, there's an include missing in the source code,
+# so we insert it
+time_h_included=`grep "sys/time.h" util/sport.c | wc -l`
+if [ $time_h_included -eq 0 ]
+then
+    echo "including sys/time.h"
+    sed -i '/string.h/a \#include <sys/time.h>' util/sport.c
+fi
 make
-make install
+sudo make install
