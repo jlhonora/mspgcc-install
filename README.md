@@ -1,7 +1,7 @@
 Install mspgcc in Ubuntu
 ========================
 
-This repo has a script to install and some utilities to use  [mspgcc uniarch](http://mspgcc.sourceforge.net/) (C compiler for [msp430](http://www.ti.com/msp430) microcontrollers) in Ubuntu. It installs the LTS (Long Term Support) version of the compiler, 
+This repo has a script to install [mspgcc uniarch](http://mspgcc.sourceforge.net/) (C compiler for [msp430](http://www.ti.com/msp430) microcontrollers) in Ubuntu, along with some utilities for it. It installs the LTS (Long Term Support) version of the compiler, 
 which is the most up-to-date version. Currently, this is LTS 20120406. __Update__: The branch '20120911' contains a script to install the 20-bit development compiler, based on gcc 4.7.
 
 To build mspgcc you will need to install _at least_ the following packages:
@@ -37,7 +37,7 @@ The mmcu option should match the microcontroller you will be using.
 
 ## Installing the file in a Launchpad board ##
 
-The previous command should generate a compiled file named `a.out`, ready to install in the microcontroller. If you have a [MSP430 Launchpad Board](http://www.ti.com/ww/en/launchpad/msp430_head.html) at reach you can install the compiled file with [mspdebug](http://mspdebug.sourceforge.net/). It can be installed with the `install-mspdebug` script or by running the following command:
+The previous command should generate a compiled file named `a.out`, ready to install in the microcontroller. If you have a [MSP430 Launchpad Board](http://www.ti.com/ww/en/launchpad/msp430_head.html) at reach you can install the compiled file with [mspdebug](http://mspdebug.sourceforge.net/). It can be installed with the `install-mspdebug` script or by running the following commands:
 
     sudo apt-get install libusb-dev libreadline6-dev
     wget http://sourceforge.net/projects/mspdebug/files/mspdebug-0.21.tar.gz
@@ -46,7 +46,9 @@ The previous command should generate a compiled file named `a.out`, ready to ins
     make
     sudo make install
 
-USB permissions should be added to the FET interface of the Launchpad ([source](https://github.com/sergiocampama/Launchpad#mspdebug-usb-permissions)). As root, creat the file `/etc/udev/rules.d/71-persistent-msp430.rules` and add `AATR{idVendor}=="0451", ATTRS{idProduct}=="f432", MODE="0660", GROUP="plugdev"` . Then run
+Update: If you're using Ubuntu 13.04 I strongly recommend installing mspdebug via the `install-mspdebug` script, since there's a modification it should be made to the source for it to compile successfully.
+
+USB permissions should be added to the FET interface of the Launchpad ([source](https://github.com/sergiocampama/Launchpad#mspdebug-usb-permissions)). As root, create the file `/etc/udev/rules.d/71-persistent-msp430.rules` and add `AATR{idVendor}=="0451", ATTRS{idProduct}=="f432", MODE="0660", GROUP="plugdev"` . Then run
 
     sudo addgroup YOUR_USERNAME plugdev
     sudo restart udev
