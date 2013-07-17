@@ -116,9 +116,12 @@ tar xvf msp430-libc-20120224.tar.bz2
 echo "Installing libc" 
 cd msp430-libc-20120224
 patch -p1 < ../msp430-libc-20120224-sf3522752.patch
-./configure
+./configure --prefix=$INSTALL_PATH
 cd src/
 make | tee mo
+# Fix route to msp430-gcc so that sudo recognizes it
+sed -i 's/override.*= \(msp430-gcc\)/$(bindir)\/\1/' Makefile
+sed -i 's/override.*= \(msp430-ar\)/$(bindir)\/\1/' Makefile
 sudo make PREFIX=$INSTALL_PATH install | tee mio
 echo "Done with libc" 
 errors=`cat mo mio | grep "Error [0-9]"`
