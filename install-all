@@ -50,6 +50,10 @@ echo "Extracting gcc"
 tar xjf gcc-4.6.3.tar.bz2
 echo "Installing gcc" 
 cd gcc-4.6.3
+cd contrib
+echo "Downloading prerequisites"
+./download_prerequisites
+cd ..
 patch -p1 < ../msp430-gcc-4.6.3-20120406.patch
 patch -p1 < ../msp430-gcc-4.6.3-20120406-sf3540953.patch
 patch -p1 < ../msp430-gcc-4.6.3-20120406-sf3559978.patch
