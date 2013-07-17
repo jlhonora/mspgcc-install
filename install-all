@@ -105,7 +105,7 @@ echo "Extracting libc"
 tar xvf msp430-libc-20120716.tar.bz2
 echo "Installing libc" 
 cd msp430-libc-20120716
-./configure
+./configure --prefix=$INSTALL_PATH
 cd src/
 make | tee mo
 # Fix route to msp430-gcc so that sudo recognizes it
