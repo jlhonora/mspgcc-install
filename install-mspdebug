@@ -19,18 +19,10 @@ check_or_download() {
 }
 
 apt-get -y install libusb-dev libreadline6-dev
-check_or_download mspdebug-0.21.tar.gz \
-                  http://sourceforge.net/projects/mspdebug/files/mspdebug-0.21.tar.gz
-tar -xvf mspdebug-0.21.tar.gz
-cd mspdebug-0.21
+check_or_download mspdebug-0.22.tar.gz \
+                  http://sourceforge.net/projects/mspdebug/files/mspdebug-0.22.tar.gz
+tar -xvf mspdebug-0.22.tar.gz
+cd mspdebug-0.22
 
-# So far, there's an include missing in the source code,
-# so we insert it
-time_h_included=`grep "sys/time.h" util/sport.c | wc -l`
-if [ $time_h_included -eq 0 ]
-then
-    echo "including sys/time.h"
-    sed -i '/string.h/a \#include <sys/time.h>' util/sport.c
-fi
 make
 sudo make install
