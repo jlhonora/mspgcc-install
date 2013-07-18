@@ -40,9 +40,9 @@ The mmcu option should match the microcontroller you will be using.
 The previous command should generate a compiled file named `a.out`, ready to install in the microcontroller. If you have a [MSP430 Launchpad Board](http://www.ti.com/ww/en/launchpad/msp430_head.html) at reach you can install the compiled file with [mspdebug](http://mspdebug.sourceforge.net/). It can be installed with the `install-mspdebug` script (`$ ./install-mspdebug`) or by running the following commands:
 
     sudo apt-get install libusb-dev libreadline6-dev
-    wget http://sourceforge.net/projects/mspdebug/files/mspdebug-0.21.tar.gz
-    tar -xvf mspdebug-0.21.tar.gz
-    cd mspdebug-0.21
+    wget http://sourceforge.net/projects/mspdebug/files/mspdebug-0.22.tar.gz
+    tar -xvf mspdebug-0.22.tar.gz
+    cd mspdebug-0.22
     make
     sudo make install
 
