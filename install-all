@@ -159,5 +159,8 @@ errors=`cat mo mio | grep "Error [0-9]"`
 check_for_errors "$errors"
 cd ..
 
+# The crt0.S file seems to be missing when running gdb
+# ./gdb_crt0_fix
+
 PATH=$OLDPATH
 echo "Done installing, installed at $INSTALL_PATH"
