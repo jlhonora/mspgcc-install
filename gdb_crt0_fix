@@ -7,13 +7,19 @@
 # Locate the file
 echo "Locating the file"
 crt0_file=`find . -name "crt0.S"`
+if [ -z "$crt0_file" ]
+then
+	echo "Couldn't find file, using local copy"
+	cp backup_crt0.S crt0.S
+	crt0_file="./crt0.S"
+fi
 
 # Copy it to the install location
 msp430gdb_file=`which msp430-gdb`
 msp430gdb_path=`dirname $msp430gdb_file`
 
 crt0_new_path="$msp430gdb_path/../../../gcc/gcc/config/msp430"
-mkdir -p $crt0_new_path
+sudo mkdir -p $crt0_new_path
 
 # Check if the file exists, if not, replace it
 if [ ! -f  $crt0_new_path/crt0.S ]; then
