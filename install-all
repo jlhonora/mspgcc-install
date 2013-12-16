@@ -23,7 +23,7 @@ check_or_download() {
     if [ ! -f $1 ]
     then
         echo "$1 does not exists, downloading."
-        wget "$2"
+        wget "$2" --no-check-certificate
     else
         echo -n "$1 exists, will not re-download. Consider "
         echo "removing it if you want a clean install"
