@@ -1,8 +1,8 @@
 #/usr/bin/env bash
-# Installs msp430-gcc and friends
-# JLH 2013
+# Installs msp430-gcc (RedHat's version!), gdb and mspdebug
+# JLH 2014
 
-# A simple (and sometimes buggy) error checking tool
+# A simple error checking tool
 check_for_errors(){
     echo "$1" | tail 
     if [ -n "$1" ]
@@ -22,7 +22,7 @@ check_for_errors(){
 check_or_download() {
     if [ ! -f $1 ]
     then
-        echo "$1 does not exists, downloading."
+        echo "$1 does not exist, downloading."
         wget "$2" --no-check-certificate
     else
         echo -n "$1 exists, will not re-download. Consider "
@@ -30,137 +30,83 @@ check_or_download() {
     fi
 }
 
-# Installation path. This will overwrite your
-# changes to the INSTALL_PATH folder
-INSTALL_PATH=/usr/local/msp430
+set -e
 
-# get LTS mspgcc
-check_or_download mspgcc-20120406.tar.bz2 \
-                  http://sourceforge.net/projects/mspgcc/files/mspgcc/mspgcc-20120406.tar.bz2
-tar xvf mspgcc-20120406.tar.bz2
-cd mspgcc-20120406
+sudo apt-get -y install cvs
 
-#binutils
-echo "binutils"
-check_or_download binutils-2.21.1a.tar.bz2 \
-                  ftp://ftp.gnu.org/pub/gnu/binutils/binutils-2.21.1a.tar.bz2
-echo "Extracting binutils" 
-tar xjf binutils-2.21.1a.tar.bz2
-echo "Installing binutils" 
-( cd binutils-2.21.1 ; patch -p1 < ../msp430-binutils-2.21.1a-20120406.patch )
-mkdir -p BUILD/binutils
-cd BUILD/binutils
-../../binutils-2.21.1/configure \
-  --target=msp430 \
-  --prefix=$INSTALL_PATH \
-2>&1 | tee co
-make 2>&1 | tee mo
-sudo make install 2>&1 | tee moi
-echo "Done with binutils" 
-errors=`cat co mo moi | grep "Error [0-9]"`
-check_for_errors "$errors"
-cd ../../
+mkdir -p msp430-build
 
-#gcc
-echo "gcc" 
-check_or_download gcc-4.6.3.tar.bz2 \
-                  ftp://ftp.gnu.org/pub/gnu/gcc/gcc-4.6.3/gcc-4.6.3.tar.bz2
+#### binutils ###
+#################
 
-check_or_download msp430-gcc-4.6.3-20120406-sf3540953.patch \
-                  http://sourceforge.net/projects/mspgcc/files/Patches/LTS/20120406/msp430-gcc-4.6.3-20120406-sf3540953.patch
+git clone git://sourceware.org/git/binutils-gdb.git
 
-check_or_download msp430-gcc-4.6.3-20120406-sf3559978.patch \
-                  http://sourceforge.net/projects/mspgcc/files/Patches/LTS/20120406/msp430-gcc-4.6.3-20120406-sf3559978.patch
-echo "Extracting gcc" 
-tar xjf gcc-4.6.3.tar.bz2
-echo "Installing gcc" 
-cd gcc-4.6.3
-cd contrib
-echo "Downloading prerequisites"
-./download_prerequisites
-cd ..
-patch -p1 < ../msp430-gcc-4.6.3-20120406.patch
-patch -p1 < ../msp430-gcc-4.6.3-20120406-sf3540953.patch
-patch -p1 < ../msp430-gcc-4.6.3-20120406-sf3559978.patch
-cd ..
-mkdir -p BUILD/gcc
-cd BUILD/gcc
-../../gcc-4.6.3/configure \
-  --target=msp430 \
-  --enable-languages=c,c++ \
-  --prefix=$INSTALL_PATH \
-2>&1 | tee co
-make 2>&1 | tee mo
-sudo make install 2>&1 | tee moi
-echo "Done with gcc" 
-errors=`cat co mo moi | grep "Error [0-9]"`
-check_for_errors "$errors"
-cd ../../
+mkdir -p msp430-binutils
 
-#gdb
-echo "gdb" 
-check_or_download gdb-7.2a.tar.bz2 \
-                  ftp://ftp.gnu.org/pub/gnu/gdb/gdb-7.2a.tar.bz2
-echo "Extracting gdb" 
-tar xjf gdb-7.2a.tar.bz2
-echo "Installing gdb" 
-( cd gdb-7.2 ; patch -p1 < ../msp430-gdb-7.2a-20111205.patch )
-mkdir -p BUILD/gdb
-cd BUILD/gdb
-../../gdb-7.2/configure \
-  --target=msp430 \
-  --prefix=$INSTALL_PATH \
-2>&1 | tee co
-make 2>&1 | tee mo
-sudo make install 2>&1 | tee moi
-echo "Done with gdb" 
-errors=`cat co mo moi | grep "Error [0-9]"`
-check_for_errors "$errors"
-cd ../../
+# Configure Binutils
+cd msp430-binutils
 
-#msp430-mcu
-echo "Downloading msp430mcu" 
-check_or_download msp430mcu-20120406.tar.bz2 \
-                  http://sourceforge.net/projects/mspgcc/files/msp430mcu/msp430mcu-20120406.tar.bz2
+# We need to build binutils for the msp430
+../binutils-gdb/configure --target=msp430-elf
 
-check_or_download msp430mcu-20120406-sf3522088.patch \
-                  http://sourceforge.net/projects/mspgcc/files/Patches/LTS/20120406/msp430mcu-20120406-sf3522088.patch
-echo "Extracting msp430mcu" 
-tar xvf msp430mcu-20120406.tar.bz2
-cd msp430mcu-20120406
-patch -p1 < ../msp430mcu-20120406-sf3522088.patch
-echo "Installing msp430mcu" 
-sudo MSP430MCU_ROOT=`pwd` ./scripts/install.sh $INSTALL_PATH | tee so
+# build binutils
+make
+
+# Do the install as root (e.g., sudo)
+sudo make install
+
 cd ..
 
-OLDPATH=$PATH
-export PATH=$INSTALL_PATH/bin:$PATH
-
-#libc
-echo "Downloading libc" 
-check_or_download msp430-libc-20120224.tar.bz2 \
-                  https://sourceforge.net/projects/mspgcc/files/msp430-libc/msp430-libc-20120224.tar.bz2
-check_or_download msp430-libc-20120224-sf3522752.patch \ 
-                  http://sourceforge.net/projects/mspgcc/files/Patches/LTS/20120406/msp430-libc-20120224-sf3522752.patch
-echo "Extracting libc" 
-tar xvf msp430-libc-20120224.tar.bz2
-echo "Installing libc" 
-cd msp430-libc-20120224
-patch -p1 < ../msp430-libc-20120224-sf3522752.patch
-./configure --prefix=$INSTALL_PATH
-cd src/
-make | tee mo
-# Fix route to msp430-gcc so that sudo recognizes it
-sed -i 's/\(msp430-gcc\)/$(bindir)\/\1/' Makefile
-sed -i 's/\(msp430-ar\)/$(bindir)\/\1/' Makefile
-sudo make PREFIX=$INSTALL_PATH install | tee mio
-echo "Done with libc" 
-errors=`cat mo mio | grep "Error [0-9]"`
-check_for_errors "$errors"
+### GCC ###
+###########
+mkdir -p gcc-trunk
+cd gcc-trunk
+#  Check out GCC from SVN
+svn checkout svn://gcc.gnu.org/svn/gcc/trunk .
+# Get GCC prerequisites
+./contrib/download_prerequisites
 cd ..
 
-# The crt0.S file seems to be missing when running gdb
-# ./gdb_crt0_fix
+mkdir -p msp430-gcc
+cd msp430-gcc
+# The exact path here might be different
+../gcc-trunk/configure --target=msp430-elf --enable-languages=c,c++ --with-newlib=yes
+#  Note, you must make all-gcc and install-gcc anything else seems to break.
+make all-host
+# Do the install as root (e.g., sudo)
+sudo make install-host
+cd ..
 
-PATH=$OLDPATH
-echo "Done installing, installed at $INSTALL_PATH"
+mkdir -p newlib
+cd newlib
+echo "Enter 'anoncvs' as password"
+cvs -z 9 -d :pserver:anoncvs@sourceware.org:/cvs/src login
+cvs -z 9 -d :pserver:anoncvs@sourceware.org:/cvs/src co newlib
+cd ..
+
+mkdir -p msp430-newlib
+# Now Build Newlib for MSP430 (Since this isn't going to run linux or similar OS, we don't need syscalls)
+cd msp430-newlib
+../newlib/src/configure --target=msp430-elf
+make
+sudo make install
+cd ..
+
+mkdir -p msp430-gdb
+cd msp430-gdb
+../binutils-gdb/gdb/configure --target=msp430-elf
+make
+sudo make install
+cd ..
+
+# mspdebug
+MSPDEBUG_PREFIX='mspdebug-0.22'
+mkdir -p mspdebug
+cd mspdebug
+# get mspdebug
+check_or_download "$MSPDEBUG_PREFIX.tar.gz" http://sourceforge.net/projects/mspdebug/files/$MSPDEBUG_PREFIX.tar.gz
+tar -xvf $MSPDEBUG_PREFIX
+cd $MSPDEBUG_PREFIX
+make
+sudo make install
+cd ../..
