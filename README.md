@@ -14,7 +14,7 @@ Checkout those branches for specific instructions:
 
 To build mspgcc you will need to install _at least_ the following packages:
 
-    sudo apt-get install patch ncurses-dev build-essential bison flex libgmp3-dev libmpfr-dev libmpc-dev texinfo zlib1g-dev libusb-dev
+    sudo apt-get install patch ncurses-dev build-essential bison flex libgmp3-dev libmpfr-dev libmpc-dev texinfo zlib1g-dev libusb-dev libreadline6-dev
 
 The installation folder is `/usr/local/msp430` (modifiable in the script). If you already have contents in this folder I recommend you to move it to a backup folder, i.e.:
     
