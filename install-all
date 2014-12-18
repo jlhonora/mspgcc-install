@@ -48,6 +48,7 @@ echo "Extracting binutils"
 tar xjf binutils-2.21.1a.tar.bz2
 echo "Installing binutils" 
 ( cd binutils-2.21.1 ; patch -p1 < ../msp430-binutils-2.21.1a-20120406.patch )
+( cd binutils-2.21.1 ; patch -p1 < ../../texinfo-5-fixes.patch )
 mkdir -p BUILD/binutils
 cd BUILD/binutils
 ../../binutils-2.21.1/configure \
