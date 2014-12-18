@@ -1,4 +1,6 @@
 #/usr/bin/env bash
+# Installs msp430-gcc and friends
+# JLH 2013
 
 # A simple (and sometimes buggy) error checking tool
 check_for_errors(){
@@ -9,6 +11,22 @@ check_for_errors(){
         exit
     else
         echo "All OK"
+    fi
+}
+
+# Checks if a given file exists.
+# if it does not, then it downloads it
+# from the web. Must be given the filename
+# as first argument and the url as the second
+# argument.
+check_or_download() {
+    if [ ! -f $1 ]
+    then
+        echo "$1 does not exist, downloading."
+        wget "$2" --no-check-certificate
+    else
+        echo -n "$1 exists, will not re-download. Consider "
+        echo "removing it if you want a clean install"
     fi
 }
 
@@ -28,6 +46,7 @@ echo "Extracting binutils"
 tar xjf binutils-2.22.tar.bz2
 echo "Installing binutils" 
 ( cd binutils-2.22 ; patch -p1 < ../msp430-binutils-2.22-20120911.patch )
+( cd binutils-2.22 ; patch -p1 < ../../texinfo-5-fixes.patch )
 mkdir -p BUILD/binutils
 cd BUILD/binutils
 ../../binutils-2.22/configure \
@@ -50,6 +69,9 @@ echo "Installing gcc"
 cd gcc-4.7.0
 patch -p1 < ../msp430-gcc-4.7.0-20120716.patch
 patch -p1 < ../msp430-gcc-4.7.0-20120911.patch
+patch -p1 < ../../texinfo-5-fixes-gcc.patch
+patch -p1 < ../../ira-int-fix.patch 
+sed -i 's/BUILD_INFO=info/BUILD_INFO=/' gcc/configure
 cd ..
 mkdir -p BUILD/gcc
 cd BUILD/gcc
@@ -66,12 +88,15 @@ check_for_errors "$errors"
 cd ../../
 
 #gdb
-echo "Downloading gdb" 
-wget ftp://ftp.gnu.org/pub/gnu/gdb/gdb-7.2a.tar.bz2
+echo "gdb" 
+check_or_download gdb-7.2a.tar.bz2 \
+                  ftp://ftp.gnu.org/pub/gnu/gdb/gdb-7.2a.tar.bz2
 echo "Extracting gdb" 
 tar xjf gdb-7.2a.tar.bz2
 echo "Installing gdb" 
 ( cd gdb-7.2 ; patch -p1 < ../msp430-gdb-7.2a-20111205.patch )
+( cd gdb-7.2 ; patch -p1 < ../../bfdio-fixes.patch )
+( cd gdb-7.2 ; patch -p1 < ../../texinfo-5-fixes-gdb.patch )
 mkdir -p BUILD/gdb
 cd BUILD/gdb
 ../../gdb-7.2/configure \
@@ -117,6 +142,9 @@ echo "Done with libc"
 errors=`cat mo mio | grep "Error [0-9]"`
 check_for_errors "$errors"
 cd ..
+
+# The crt0.S file seems to be missing when running gdb
+# ./gdb_crt0_fix
 
 PATH=$OLDPATH
 echo "Done installing, installed at $INSTALL_PATH"

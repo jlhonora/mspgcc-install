@@ -1,0 +1,21 @@
+diff -Nura gdb-7.2-original/bfd/doc/bfd.texinfo gdb-7.2/bfd/doc/bfd.texinfo
+--- gdb-7.2-orignal/bfd/doc/bfd.texinfo	2009-09-02 15:18:38.000000000 +0800
++++ gdb-7.2/bfd/doc/bfd.texinfo	2014-03-05 18:25:20.392761690 +0800
+@@ -323,7 +323,7 @@
+ @printindex cp
+ 
+ @tex
+-% I think something like @colophon should be in texinfo.  In the
++% I think something like @@colophon should be in texinfo.  In the
+ % meantime:
+ \long\def\colophon{\hbox to0pt{}\vfill
+ \centerline{The body of this manual is set in}
+@@ -334,7 +334,7 @@
+ \centerline{{\sl\fontname\tensl\/}}
+ \centerline{are used for emphasis.}\vfill}
+ \page\colophon
+-% Blame: doc@cygnus.com, 28mar91.
++% Blame: doc@@cygnus.com, 28mar91.
+ @end tex
+ 
+ @bye

@@ -1,0 +1,32 @@
+#!/bin/bash
+# JLH 2013
+# When debugging with msp430-gdb,
+# there's usually an error regarding the
+# crt0.S file. Here we find it and replace it
+
+# Locate the file
+echo "Locating the file"
+crt0_file=`find . -name "crt0.S"`
+if [ -z "$crt0_file" ]
+then
+	echo "Couldn't find file, using local copy"
+	cp backup_crt0.S crt0.S
+	crt0_file="./crt0.S"
+fi
+
+# Copy it to the install location
+msp430gdb_file=`which msp430-gdb`
+msp430gdb_path=`dirname $msp430gdb_file`
+
+crt0_new_path="$msp430gdb_path/../../../gcc/gcc/config/msp430"
+sudo mkdir -p $crt0_new_path
+
+# Check if the file exists, if not, replace it
+if [ ! -f  $crt0_new_path/crt0.S ]; then
+    echo "File not found, replacing"
+    sudo cp $crt0_file $crt0_new_path
+else
+    echo "File found, will not replace"
+fi
+
+echo "Done"
