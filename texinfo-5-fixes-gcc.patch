@@ -1,0 +1,13 @@
+--- a/gcc/doc/cppopts.texi	2010-12-20 07:26:12.000000000 +0000
++++ b/gcc/doc/cppopts.texi	2014-12-18 15:31:24.195484635 +0000
+@@ -769,8 +769,8 @@
+ Enable special code to work around file systems which only permit very
+ short file names, such as MS-DOS@.
+ 
+-@itemx --help
+-@itemx --target-help
++@item --help
++@item --target-help
+ @opindex help
+ @opindex target-help
+ Print text describing all the command line options instead of

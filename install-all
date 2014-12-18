@@ -84,6 +84,8 @@ patch -p1 < ../msp430-gcc-4.6.3-20120406.patch
 patch -p1 < ../msp430-gcc-4.6.3-20120406-sf3540953.patch
 patch -p1 < ../msp430-gcc-4.6.3-20120406-sf3559978.patch
 patch -p1 < ../../texinfo-5-fixes-gcc.patch
+patch -p1 < ../../ira-int-fix.patch 
+sed -i 's/BUILD_INFO=info/BUILD_INFO=/' gcc/configure
 cd ..
 mkdir -p BUILD/gcc
 cd BUILD/gcc
@@ -107,6 +109,8 @@ echo "Extracting gdb"
 tar xjf gdb-7.2a.tar.bz2
 echo "Installing gdb" 
 ( cd gdb-7.2 ; patch -p1 < ../msp430-gdb-7.2a-20111205.patch )
+( cd gdb-7.2 ; patch -p1 < ../../bfdio-fixes.patch )
+( cd gdb-7.2 ; patch -p1 < ../../texinfo-5-fixes-gdb.patch )
 mkdir -p BUILD/gdb
 cd BUILD/gdb
 ../../gdb-7.2/configure \
