@@ -22,7 +22,7 @@ check_for_errors(){
 check_or_download() {
     if [ ! -f $1 ]
     then
-        echo "$1 does not exists, downloading."
+        echo "$1 does not exist, downloading."
         wget "$2" --no-check-certificate
     else
         echo -n "$1 exists, will not re-download. Consider "
@@ -83,6 +83,7 @@ cd ..
 patch -p1 < ../msp430-gcc-4.6.3-20120406.patch
 patch -p1 < ../msp430-gcc-4.6.3-20120406-sf3540953.patch
 patch -p1 < ../msp430-gcc-4.6.3-20120406-sf3559978.patch
+patch -p1 < ../../texinfo-5-fixes-gcc.patch
 cd ..
 mkdir -p BUILD/gcc
 cd BUILD/gcc
