@@ -75,7 +75,8 @@ To install the development version of the compiler, do:
 
 And then follow the instructions above.
 
-## Credits ##
+## Contributors ##
     
-This guide is loosely based on [Sergio Campama's](https://github.com/sergiocampama/Launchpad) guide and the README files of mspgcc.
+- This guide is loosely based on [Sergio Campama's](https://github.com/sergiocampama/Launchpad) guide and the README files of mspgcc.
+- Gunnar Henne
 

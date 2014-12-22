@@ -126,15 +126,12 @@ cd ../../
 
 #msp430-mcu
 echo "Downloading msp430mcu" 
-check_or_download msp430mcu-20120406.tar.bz2 \
-                  http://sourceforge.net/projects/mspgcc/files/msp430mcu/msp430mcu-20120406.tar.bz2
+check_or_download msp430mcu-20130321.tar.bz2 \
+                  http://sourceforge.net/projects/mspgcc/files/msp430mcu/msp430mcu-20130321.tar.bz2
 
-check_or_download msp430mcu-20120406-sf3522088.patch \
-                  http://sourceforge.net/projects/mspgcc/files/Patches/LTS/20120406/msp430mcu-20120406-sf3522088.patch
 echo "Extracting msp430mcu" 
-tar xvf msp430mcu-20120406.tar.bz2
-cd msp430mcu-20120406
-patch -p1 < ../msp430mcu-20120406-sf3522088.patch
+tar xvf msp430mcu-20130321.tar.bz2
+cd msp430mcu-20130321
 echo "Installing msp430mcu" 
 sudo MSP430MCU_ROOT=`pwd` ./scripts/install.sh $INSTALL_PATH | tee so
 cd ..
