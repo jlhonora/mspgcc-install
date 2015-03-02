@@ -19,10 +19,10 @@ check_or_download() {
 }
 
 apt-get -y install libusb-dev libreadline6-dev
-check_or_download mspdebug-0.22.tar.gz \
-                  http://sourceforge.net/projects/mspdebug/files/mspdebug-0.22.tar.gz
-tar -xvf mspdebug-0.22.tar.gz
-cd mspdebug-0.22
+check_or_download mspdebug-0.23.tar.gz \
+                  http://sourceforge.net/projects/mspdebug/files/mspdebug-0.23.tar.gz
+tar -xvf mspdebug-0.23.tar.gz
+cd mspdebug-0.23
 
 make
 sudo make install
