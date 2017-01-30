@@ -1,9 +1,19 @@
+# Read this before proceeding
+
+The easiest way to run mspgcc in ubuntu is to install it by typing:
+
+```
+sudo apt-get install gcc-msp430
+```
+
+That will install a sensible toolchain for msp430-gcc. If for any reason you need to build the toolchain by yourself, then this script will help you accomplish this.
+
 Install mspgcc in Ubuntu
 ========================
 
 This repo has a script to install [mspgcc uniarch](http://mspgcc.sourceforge.net/) (C compiler for [msp430](http://www.ti.com/msp430) microcontrollers) in Ubuntu, along with some utilities for it. It installs the LTS (Long Term Support) version of the compiler, 
 which is the most up-to-date version. Currently, this is LTS 20120406. __Update__: There are special branches for different mspgcc flavors:
-  * The 'master' branch was tested with Ubuntu 14.04, using gcc 4.8.2. Use commit 6df3dabca for ubuntu 12.04.
+  * The 'master' branch was tested with Ubuntu 14.04, using gcc 4.8.2.
   * Branch '20120911' contains a script to install the 20-bit development compiler, based on gcc 4.7.
   * Branch 'redhat' builds the [RedHat version of mspgcc](http://msp430-gcc-users.1086195.n5.nabble.com/MSP430-GCC-goes-Red-Hat-td1176.html).
 
@@ -11,14 +21,37 @@ Checkout those branches for specific instructions:
 
     git checkout 'branchname'
 
+
+## Special considerations for Ubuntu versions
+
+### 12.04
+
+Use commit `6df3dabca`: `git checkout 6df3dabca`.
+
+### 14.04
+
+Use master branch
+
+### 16.04
+
+Install and use gcc-4.7:
+
+```
+sudo apt-get install gcc-4.7
+sudo update-alternatives --install /usr/bin/gcc-4.7 50
+sudo update-alternatives --set gcc /usr/bin/gcc-4.7
+```
+
+Remember to switch back to your previous version of gcc after running this script.
+
 ## Building ##
 
 To build mspgcc you will need to install _at least_ the following packages:
 
-    sudo apt-get install patch ncurses-dev build-essential bison flex libgmp3-dev libmpfr-dev libmpc-dev texinfo zlib1g-dev libusb-dev libreadline6-dev
+    sudo apt-get install patch ncurses-dev build-essential bison flex libgmp3-dev libmpfr-dev libmpc-dev texinfo zlib1g-dev libusb-dev libreadline6-dev libz-dev
 
 The installation folder is `/usr/local/msp430` (modifiable in the script). If you already have contents in this folder I recommend you to move it to a backup folder, i.e.:
-    
+
     sudo mv /usr/local/msp430 /usr/local/msp430-backup
 
 To install go to the console and run:
